@@ -1,0 +1,11 @@
+{
+    "ipIdentUrl": "https://api.ipify.org/",
+    "sites": [
+        {
+            "authEmail": "myemail@mail.mail",
+            "authKey": "myauthkey",
+            "zoneId": "myzoneid",
+            "domain": "mydomain"
+        } 
+    ] 
+}
