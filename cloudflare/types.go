@@ -13,7 +13,7 @@ type CFRequester struct {
 	httpClient *http.Client
 	config     *config.Config
 	workers    int
-	workCh     chan *config.Site
+	workCh     chan config.Site
 	wg         *sync.WaitGroup
 	logger     logs.Logger
 }

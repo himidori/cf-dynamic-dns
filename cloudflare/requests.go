@@ -22,7 +22,7 @@ func (cr *CFRequester) Run() {
 	}
 
 	for _, site := range cr.config.Sites {
-		cr.workCh <- &site
+		cr.workCh <- site
 	}
 	close(cr.workCh)
 
@@ -33,7 +33,7 @@ func (cr *CFRequester) processSites() {
 	for site := range cr.workCh {
 		cr.logger.Info("processing domain %s", site.Domain)
 
-		records, err := cr.getRecords(site)
+		records, err := cr.getRecords(&site)
 		if err != nil {
 			cr.logger.Err("failed to get dns records for domain %s. err: %v", site.Domain, err)
 			continue
@@ -49,7 +49,7 @@ func (cr *CFRequester) processSites() {
 			if rec.Content != currIP {
 				cr.logger.Info("updating record for domain %s. new ip: %s", rec.DomainName, currIP)
 
-				if err := cr.updateRecord(site, &rec, currIP); err != nil {
+				if err := cr.updateRecord(&site, &rec, currIP); err != nil {
 					cr.logger.Err("failed to update record for domain %s. err: %v", rec.DomainName, err)
 					continue
 				}

@@ -30,9 +30,14 @@ func (cr *CFRequester) makeRequest(url, method, authKey, authEmail string, heade
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf(errStatusNotOk)
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
 	}
 
-	return ioutil.ReadAll(resp.Body)
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("status code is not 200. code: %d, response: %s", resp.StatusCode, body)
+	}
+
+	return body, nil
 }

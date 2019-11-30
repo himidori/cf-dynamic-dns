@@ -14,7 +14,7 @@ func NewCFRequester(cfg *config.Config, workers int) *CFRequester {
 		httpClient: &http.Client{Timeout: time.Second * 10},
 		config:     cfg,
 		workers:    workers,
-		workCh:     make(chan *config.Site),
+		workCh:     make(chan config.Site),
 		wg:         &sync.WaitGroup{},
 		logger:     logs.NewLogger(),
 	}
